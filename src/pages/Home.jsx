@@ -264,7 +264,7 @@ function Home() {
           />
           <div>
             <p>Intelligent Network Lab</p>
-            <span>영남대학교 지능형 연구실</span>
+            <span>영남대학교 지능형 네트워크 연구실</span>
           </div>
         </div>
         <nav className="main-nav">
