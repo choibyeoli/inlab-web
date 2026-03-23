@@ -25,3 +25,57 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Vite / build outputs
+coverage
+out
+.vite/
+*.tsbuildinfo
+
+# Caches
+.eslintcache
+
+# User-provided documents (keep repo lean)
+public/files/**/*.pdf
+public/files/**/*.hwpx
+
+# Secrets: API keys, credentials, certificates
+#
+# - 이미 커밋된 파일은 gitignore만으로 삭제되지 않으니,
+#   커밋된 시크릿 파일이 있으면 `git rm --cached <path>`가 필요합니다.
+
+# Environment / secret files
+.env*
+!.env.example
+!.env.template
+.envrc
+
+# Common secret/config filenames (provider SDKs, internal tooling)
+credentials*.json
+service-account*.json
+serviceAccount*.json
+*.credentials.json
+*.secret.json
+
+# TLS / certificate / private key material
+certs/
+ssl/
+keys/
+private/
+secrets/
+credentials/
+
+*.pem
+*.crt
+*.cer
+*.key
+*.csr
+*.pfx
+*.p12
+*.der
+*.jks
+*.keystore
+
+# GitHub / CI tokens or local config
+*.token
+*.tokens

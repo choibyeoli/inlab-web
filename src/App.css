@@ -5,24 +5,32 @@
   --header-height: 100px;
 }
 
+body {
+  margin: 0; /* 브라우저 기본 여백 제거 */
+  background: #000000; /* 기본 다크 배경 */
+}
+
 .page {
   min-height: 100vh;
-  background: #f1f1f1;
-  color: #0b1a2c;
+  background: #000000;
+  color: #ffffff;
   font-family: 'Pretendard Variable', 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .lab-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: relative;
+  z-index: 20; /* 브랜드 영역만 상단에 고정되지 않게 변경 */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem var(--page-horizontal-padding);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(11, 26, 44, 0.05);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme='light'] .lab-header {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
 .main-nav {
@@ -31,24 +39,41 @@
   gap: 2rem;
 }
 
+.main-nav-row {
+  position: sticky;
+  top: 0;
+  z-index: 19;
+  display: flex;
+  justify-content: flex-end; /* 메뉴를 오른쪽 끝 정렬 */
+  margin-top: 0;
+  padding: 2.25rem var(--page-horizontal-padding); /* 상하 여백을 기존 대비 약 3배 확장 */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.main-nav-inline {
+  gap: 2.5rem;
+}
+
 .main-nav button {
   border: none;
   background: transparent;
   font-size: 1rem;
   font-weight: 700;
-  color: #a9a9a9;
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   padding: 0.5rem 0;
   transition: color 0.2s ease;
   font-family: inherit;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
 }
 
 .main-nav button:hover {
-  color: #000000;
+  color: #f7e91f;
 }
 
 .main-nav button.active {
-  color: #000000;
+  color: #ffffff;
 }
 
 .brand-area {
@@ -65,7 +90,7 @@
 
 .brand-area span {
   font-size: 0.85rem;
-  color: rgba(11, 26, 44, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .brand-logo {
@@ -78,19 +103,56 @@
 }
 
 main {
-  padding: clamp(1.5rem, 4vw, 3rem) var(--page-horizontal-padding) 4rem;
+  padding: clamp(1.5rem, 4vw, 3rem) var(--page-horizontal-padding) 4rem; /* 기존처럼 상단 여백 복원 */
 }
 
 .hero {
-  display: grid;
-  gap: 1.5rem;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  padding-top: 4rem; /* 기존 여백으로 복원 */
+}
+
+.hero-left {
+  flex: 0.9;
+  max-width: 32rem;
+  padding-left: 1.5rem; /* 뉴스 카드 내부 여백과 정렬 맞춤 */
+}
+
+.hero-eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-title {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  margin: 0;
+  max-width: 30rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-right {
+  flex: 1.3;
 }
 
 .carousel {
   position: relative;
   border-radius: 1.8rem;
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(11, 26, 44, 0.15);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
 .carousel-wrapper {
@@ -105,7 +167,7 @@ main {
 }
 
 .carousel-frame {
-  min-height: min(46vw, 420px);
+  min-height: min(36vw, 340px); /* 메인 텍스트 블록 높이에 맞게 약간 낮춤 */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -181,22 +243,24 @@ main {
 }
 
 .news-panel {
+  margin-top: 7rem; /* 상단 히어로 블록과의 간격을 한 번 더 넓게 */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.2rem;
 }
 
 .news-card {
-  background: #fff;
+  background: rgba(15, 15, 15, 0.9);
   border-radius: 1.2rem;
   padding: 1.5rem;
-  box-shadow: 0 20px 40px rgba(11, 26, 44, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .news-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 26px 55px rgba(11, 26, 44, 0.18);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.9);
 }
 
 .news-card .tag {
@@ -205,7 +269,7 @@ main {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: #0a48ff;
+  color: #f7e91f;
 }
 
 .news-card h3 {
@@ -215,16 +279,16 @@ main {
 
 .news-card p {
   margin: 0;
-  color: rgba(11, 26, 44, 0.75);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.5;
 }
 
 .intro {
   margin-top: 3rem;
   padding: 2rem;
-  background: #fff;
+  background: #121212;
   border-radius: 1.5rem;
-  box-shadow: 0 25px 50px rgba(11, 26, 44, 0.09);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
   line-height: 1.8;
 }
 
@@ -235,7 +299,7 @@ main {
 
 .intro p {
   margin-bottom: 1rem;
-  color: rgba(11, 26, 44, 0.78);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .professor {
@@ -314,6 +378,68 @@ main {
 
 .members {
   margin-top: 3rem;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+.alumni {
+  margin-top: 1.5rem;
+}
+
+.alumni-toggle-btn {
+  width: 100%;
+}
+
+.alumni-dropdown {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease;
+  margin-top: 0;
+}
+
+.alumni-dropdown.open {
+  max-height: 1200px;
+  opacity: 1;
+  margin-bottom: 1rem;
+}
+
+.alumni-grid {
+  margin-top: 0;
+}
+
+.alumni + .publication {
+  margin-top: 3rem;
+}
+
+.alumni-card {
+  min-height: 120px;
+  padding: 0.95rem 1.1rem;
+  align-items: flex-start;
+}
+
+.alumni-card .member-info {
+  gap: 0.3rem;
+  padding-bottom: 0;
+}
+
+.alumni-card h3 {
+  font-size: 1.05rem;
+}
+
+.alumni-card .member-name-en {
+  font-size: 0.82rem;
+}
+
+.alumni-card p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .members-header h2 {
@@ -323,7 +449,7 @@ main {
 
 .members-header p {
   margin-top: 0.4rem;
-  color: rgba(11, 26, 44, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .member-grid {
@@ -334,10 +460,11 @@ main {
 }
 
 .member-card {
-  background: linear-gradient(145deg, #ffffff, #f3f5ff);
+  background: linear-gradient(145deg, #1a1a1a, #101018);
   padding: 1.5rem;
   border-radius: 1.4rem;
   box-shadow: 0 16px 30px rgba(11, 26, 44, 0.1);
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -350,20 +477,22 @@ main {
   box-shadow: 0 30px 45px rgba(11, 26, 44, 0.16);
 }
 
-.member-card img {
+.member-photo {
   width: 180px;
   min-width: 180px;
-  height: 180px;
+  aspect-ratio: 3 / 4;
+  height: auto;
   border-radius: 1rem;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.member-card > div {
+.member-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding-bottom: 2.8rem;
 }
 
 .member-card h3 {
@@ -371,10 +500,100 @@ main {
   font-size: 1.3rem;
 }
 
+.member-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  transform: translateY(-3px); /* 한글 이름 기준선에서 약간 위로 올림 */
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(247, 233, 31, 0.12);
+  border: 1px solid rgba(247, 233, 31, 0.4);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.member-name-en {
+  display: block;
+  margin-top: 0.1rem; /* 한글 이름과 간격을 절반 정도로 축소 */
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7); /* 한글 이름보다 살짝 연한 톤 */
+}
+
 .member-card p {
   margin: 0;
-  color: rgba(11, 26, 44, 0.65);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1rem;
+}
+
+.member-mail-btn {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.member-mail-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(247, 233, 31, 0.16);
+  border-color: rgba(247, 233, 31, 0.7);
+}
+
+.professor-mail-btn {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  z-index: 3;
+}
+
+.professor-mail-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(247, 233, 31, 0.16);
+  border-color: rgba(247, 233, 31, 0.7);
+}
+
+.member-mail-btn img {
+  width: 18px;
+  min-width: 18px;
+  aspect-ratio: 1 / 1;
+  height: 18px;
+  border-radius: 0;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.professor-mail-btn img {
+  width: 18px;
+  min-width: 18px;
+  aspect-ratio: 1 / 1;
+  height: 18px;
+  border-radius: 0;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
 }
 
 .news,
@@ -382,9 +601,236 @@ main {
 .contact {
   margin-top: 1rem;
   padding: 2rem;
-  background: #fff;
+  background: #121212;
   border-radius: 1.5rem;
-  box-shadow: 0 25px 50px rgba(11, 26, 44, 0.09);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+}
+
+.publication {
+  position: relative;
+  z-index: 2;
+}
+
+.publication-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.publication-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.9rem;
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease;
+  cursor: pointer;
+}
+
+.publication-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  border-color: rgba(247, 233, 31, 0.7);
+  background: #1f1f1f;
+}
+
+.pub-badge {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(247, 233, 31, 0.12);
+  border: 1px solid rgba(247, 233, 31, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pub-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pub-title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.pub-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.25;
+}
+
+/* Home 화면에서의 Publications 미리보기 간격 (타임라인 페이지와 다르게 더 타이트) */
+.home-publication-list {
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.home-publication-list .publication-item {
+  padding: 0.85rem 1rem;
+}
+
+.home-publication-list .pub-text {
+  gap: 0.12rem;
+}
+
+.home-publication-list .pub-title {
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.home-publication-list .pub-meta {
+  font-size: 0.82rem;
+  line-height: 1.15;
+}
+
+.publication-more-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #181818;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.publication-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  border-color: rgba(247, 233, 31, 0.7);
+  background: #1f1f1f;
+}
+
+.publication-page {
+  position: relative;
+  z-index: 2;
+  padding-top: 6rem;
+}
+
+.publication-page-header {
+  margin-bottom: 2.5rem;
+}
+
+.publication-page-header h1 {
+  margin: 0 0 0.6rem;
+  font-size: 2.1rem;
+}
+
+.publication-page-header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pub-timeline {
+  position: relative;
+  margin-top: 1rem;
+  padding-left: 3.2rem;
+}
+
+.pub-timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.8rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(247, 233, 31, 0.9),
+    rgba(247, 233, 31, 0.2)
+  );
+}
+
+.pub-year-group {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  column-gap: 2rem;
+  margin-bottom: 2.2rem;
+}
+
+.pub-year-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 0.2rem;
+}
+
+.pub-year-label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pub-year-list {
+  padding: 0;
+}
+
+.pub-entry-clickable {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.pub-entry-clickable:hover .pub-title {
+  text-decoration: underline;
+}
+
+.pub-entry-header {
+  margin-bottom: 0.15rem;
+}
+
+.pub-timeline-card {
+  width: 100%;
+  background: #181818;
+}
+
+.pub-timeline-card + .pub-timeline-card {
+  margin-top: 0.9rem;
+}
+
+.pub-entry-divider {
+  margin: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.pub-link {
+  display: inline-flex;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #f7e91f;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(247, 233, 31, 0.6);
+  padding-bottom: 1px;
+}
+
+.pub-link:hover {
+  color: #fff9a5;
+  border-color: #fff9a5;
 }
 
 .news-header {
@@ -393,7 +839,7 @@ main {
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(11, 26, 44, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .news-header h2 {
@@ -402,7 +848,7 @@ main {
 }
 
 .write-btn {
-  background: #0b1a2c;
+  background: #f7e91f;
   color: #fff;
   border: none;
   padding: 0.6rem 1.5rem;
@@ -414,7 +860,7 @@ main {
 }
 
 .write-btn:hover {
-  background: #16213e;
+  background: #d2c61a;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(11, 26, 44, 0.2);
 }
@@ -430,17 +876,17 @@ main {
   grid-template-columns: 280px 1fr;
   gap: 1.5rem;
   padding: 1.5rem;
-  background: #fafafa;
+  background: #181818;
   border-radius: 1rem;
-  border: 1px solid rgba(11, 26, 44, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .post-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(11, 26, 44, 0.12);
-  border-color: rgba(11, 26, 44, 0.15);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+  border-color: rgba(247, 233, 31, 0.6);
 }
 
 .post-image {
@@ -448,7 +894,7 @@ main {
   height: 180px;
   border-radius: 0.8rem;
   overflow: hidden;
-  background: #e0e0e0;
+  background: #222222;
 }
 
 .post-image img {
@@ -466,13 +912,13 @@ main {
 .post-content h3 {
   margin: 0;
   font-size: 1.3rem;
-  color: #0b1a2c;
+  color: #ffffff;
   font-weight: 700;
 }
 
 .post-text {
   margin: 0;
-  color: rgba(11, 26, 44, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -484,7 +930,7 @@ main {
   display: flex;
   gap: 1rem;
   font-size: 0.85rem;
-  color: rgba(11, 26, 44, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: auto;
 }
 
@@ -505,19 +951,19 @@ main {
 .admin-bar {
   margin-top: 2rem;
   padding: 1rem;
-  background: rgba(10, 72, 255, 0.1);
+  background: rgba(247, 233, 31, 0.08);
   border-radius: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.9rem;
-  color: #0a48ff;
+  color: #f7e91f;
 }
 
 .logout-btn {
   background: transparent;
-  border: 1px solid #0a48ff;
-  color: #0a48ff;
+  border: 1px solid #f7e91f;
+  color: #f7e91f;
   padding: 0.4rem 1rem;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -526,7 +972,7 @@ main {
 }
 
 .logout-btn:hover {
-  background: #0a48ff;
+  background: #f7e91f;
   color: #fff;
 }
 
@@ -545,13 +991,13 @@ main {
 }
 
 .login-modal {
-  background: #fff;
+  background: #111111;
   border-radius: 1.2rem;
   padding: 2.5rem;
   width: 90%;
   max-width: 420px;
   position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
 }
 
 .modal-close {
@@ -561,7 +1007,7 @@ main {
   background: transparent;
   border: none;
   font-size: 2rem;
-  color: rgba(11, 26, 44, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   width: 36px;
   height: 36px;
@@ -573,14 +1019,73 @@ main {
 }
 
 .modal-close:hover {
-  background: rgba(11, 26, 44, 0.1);
-  color: #0b1a2c;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
 .login-modal h3 {
   margin: 0 0 1.5rem;
   font-size: 1.5rem;
-  color: #0b1a2c;
+  color: #ffffff;
+}
+
+.prof-modal {
+  background: #111111;
+  border-radius: 1.2rem;
+  padding: 3.6rem 3rem 2.2rem; /* 상단 패딩을 더 늘려 X 버튼과 본문 간격 확보 */
+  width: 98%;
+  max-width: 1120px;          /* 좌우로 조금 더 넓게 */
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+}
+
+.prof-modal-close {
+  left: 1.5rem;
+  right: auto;
+}
+
+.prof-modal-header h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  color: #ffffff;
+}
+
+.prof-modal-header p {
+  margin: 0.1rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+.prof-email {
+  font-size: 0.9rem;
+  color: rgba(247, 233, 31, 0.9);
+}
+
+.prof-modal-body {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.prof-section h4 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.prof-section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+}
+
+.prof-section li {
+  margin-bottom: 0.25rem;
 }
 
 .form-group {
@@ -591,24 +1096,26 @@ main {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #0b1a2c;
+  color: #ffffff;
   font-size: 0.9rem;
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid rgba(11, 26, 44, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: border-color 0.2s ease;
   box-sizing: border-box;
+  background: #111111;
+  color: #ffffff;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #0a48ff;
-  box-shadow: 0 0 0 3px rgba(10, 72, 255, 0.1);
+  border-color: #f7e91f;
+  box-shadow: 0 0 0 3px rgba(247, 233, 31, 0.25);
 }
 
 .login-submit-btn {
@@ -640,7 +1147,7 @@ main {
 .publication p,
 .contact p {
   margin-bottom: 1rem;
-  color: rgba(11, 26, 44, 0.78);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.8;
 }
 
@@ -663,7 +1170,7 @@ main {
 }
 
 .contact-details strong {
-  color: #0b1a2c;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -680,7 +1187,17 @@ main {
   min-height: 400px;
   border: none;
   display: block;
-  background-color: #f5f5f5;
+  background-color: #111111;
+}
+
+.map-container .google-map.map-fallback {
+  padding: 1.25rem;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media (max-width: 720px) {
@@ -694,35 +1211,61 @@ main {
 }
 
 .footer {
-  border-top: 1px solid rgba(11, 26, 44, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 2.5rem var(--page-horizontal-padding);
-  background: #fff;
+  background: #252525;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 0.6rem;
-  color: rgba(11, 26, 44, 0.65);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .footer .brand {
   font-weight: 700;
-  color: #0b1a2c;
+  color: #ffffff;
 }
 
 @media (max-width: 720px) {
   .lab-header {
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .main-nav {
-    gap: 1rem;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
   }
 
+  .brand-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .brand-area > div {
+    text-align: left;
+  }
+
+  .main-nav {
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
   .main-nav button {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    padding: 0.35rem 0;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-btn {
@@ -741,6 +1284,27 @@ main {
 
   .hero {
     gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-left {
+    max-width: 100%;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .hero-right {
+    width: 100%;
+  }
+
+  .carousel {
+    width: 100%;
+  }
+
+  .carousel-frame {
+    flex: 0 0 100%;
+    min-width: 100%;
   }
 
   .professor {
@@ -755,7 +1319,9 @@ main {
     left: auto;
     bottom: auto;
     width: min(250px, 80%);
-    margin-bottom: 2rem;
+    display: block;
+    margin: 0 auto 2rem;
+    transform: translateX(0.5cm);
   }
 
   .professor-content {
@@ -769,11 +1335,44 @@ main {
   }
 
   .post-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: 110px 1fr;
+    padding: 0.95rem;
+    gap: 0.9rem;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .post-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(247, 233, 31, 0.55);
   }
 
   .post-image {
-    height: 200px;
+    height: 110px;
+    border-radius: 0.65rem;
+  }
+
+  .posts-list {
+    gap: 1.2rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .post-text {
+    -webkit-line-clamp: 2;
+  }
+
+  .post-meta {
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    margin-top: 0.6rem;
   }
 
   .news-header {
@@ -791,29 +1390,157 @@ main {
     margin: 1rem;
   }
 
+  .members {
+    position: relative;
+  }
+
+  /* Members 하단과 Alumni 토글 사이 간격을 다른 섹션과 유사하게 축소 */
+  .alumni {
+    margin-top: 0.28rem;
+  }
+
+  .publication-more-btn.alumni-toggle-btn {
+    margin-top: 0.2rem;
+  }
+
+  .alumni-dropdown.open {
+    max-height: 1600px;
+  }
+
   .member-grid {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 0 0.45rem;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    margin-right: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .member-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .member-card {
-    flex-direction: column;
-    padding: 1.2rem;
-    gap: 1rem;
+    flex-direction: row;
+    padding: 1.25rem;
+    gap: 1.25rem;
+    min-width: 360px;
+    max-width: 360px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    box-shadow: none;
+    align-items: flex-start;
   }
 
-  .member-card img {
-    width: 100%;
-    min-width: auto;
-    height: 200px;
+  .member-card:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .member-photo {
+    width: 140px;
+    min-width: 140px;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .member-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 0;
+    min-width: 0;
   }
 
   .member-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+
+  .member-role-badge {
+    order: -1;
+    margin-left: 0;
+    transform: none;
+  }
+
+  /* Alumni는 학위 배지를 이름 '옆'으로 (이름 위로 올리지 않음) */
+  .alumni-card h3 {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .alumni-card .member-role-badge {
+    order: 0;
+    margin-left: 0.5rem;
+    transform: translateY(-3px);
   }
 
   .member-card p {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .home-publication-list {
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .home-publication-list .publication-item {
+    padding: 0.75rem 0.9rem;
+    gap: 0.75rem;
+  }
+
+  .home-publication-list .pub-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .home-publication-list .pub-meta {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .main-nav-row {
+    justify-content: center;
+    padding: 1.5rem 1.25rem;
+  }
+
+  main {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+
+  .news,
+  .publication,
+  .contact {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .footer {
+    padding: 1.8rem 1.25rem;
   }
 }
 
@@ -832,8 +1559,8 @@ main {
 }
 
 .back-btn {
-  background: #0b1a2c;
-  color: #fff;
+  background: #f7e91f;
+  color: #000000;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 0.5rem;
@@ -845,26 +1572,26 @@ main {
 }
 
 .back-btn:hover {
-  background: #16213e;
+  background: #d2c61a;
   transform: translateX(-2px);
 }
 
 .post-detail-content {
-  background: #fff;
+  background: #121212;
   border-radius: 1rem;
   padding: 2.5rem;
-  box-shadow: 0 4px 20px rgba(11, 26, 44, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
 }
 
 .post-detail-header {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 2px solid rgba(11, 26, 44, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .post-detail-header h1 {
   font-size: clamp(1.5rem, 3vw, 2.2rem);
-  color: #0b1a2c;
+  color: #ffffff;
   margin: 0 0 1rem 0;
   line-height: 1.4;
 }
@@ -873,7 +1600,7 @@ main {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
-  color: #666;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
 }
 
@@ -899,7 +1626,7 @@ main {
 .post-detail-text {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: #333;
+  color: rgba(255, 255, 255, 0.88);
   white-space: pre-line;
   word-break: keep-all;
 }
@@ -907,10 +1634,10 @@ main {
 .post-list-sidebar {
   position: sticky;
   top: 120px;
-  background: #fff;
+  background: #121212;
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(11, 26, 44, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
   max-height: calc(100vh - 140px);
   overflow-y: auto;
 }
@@ -918,9 +1645,9 @@ main {
 .post-list-sidebar h3 {
   margin: 0 0 1.5rem 0;
   font-size: 1.3rem;
-  color: #0b1a2c;
+  color: #ffffff;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(11, 26, 44, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .sidebar-posts {
@@ -933,22 +1660,22 @@ main {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: #fafafa;
+  background: #181818;
   border-radius: 0.8rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid rgba(11, 26, 44, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .sidebar-post-item:hover {
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(11, 26, 44, 0.12);
-  border-color: rgba(11, 26, 44, 0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
+  border-color: rgba(247, 233, 31, 0.6);
 }
 
 .sidebar-post-item.active {
-  background: #f0f4ff;
-  border-color: #0a48ff;
+  background: #222222;
+  border-color: #f7e91f;
 }
 
 .sidebar-post-image {
@@ -957,7 +1684,7 @@ main {
   border-radius: 0.6rem;
   overflow: hidden;
   flex-shrink: 0;
-  background: #e0e0e0;
+  background: #222222;
 }
 
 .sidebar-post-image img {
@@ -977,7 +1704,7 @@ main {
 .sidebar-post-info h4 {
   margin: 0;
   font-size: 0.95rem;
-  color: #0b1a2c;
+  color: #ffffff;
   font-weight: 600;
   line-height: 1.4;
   display: -webkit-box;
@@ -990,13 +1717,58 @@ main {
   display: flex;
   gap: 0.8rem;
   font-size: 0.75rem;
-  color: rgba(11, 26, 44, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: auto;
 }
 
 .sidebar-post-meta span:not(:first-child)::before {
   content: '•';
   margin-right: 0.5rem;
+}
+
+.post-attachments {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.post-attachments-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+
+.post-attachments-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.post-attachment-card {
+  display: block;
+  padding: 1rem 1.1rem;
+  border-radius: 0.9rem;
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.post-attachment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  border-color: rgba(247, 233, 31, 0.7);
+  background: #1f1f1f;
+}
+
+.post-attachment-name {
+  font-weight: 700;
+}
+
+.post-attachment-meta {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 @media (max-width: 1024px) {

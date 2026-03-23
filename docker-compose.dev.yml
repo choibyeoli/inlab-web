@@ -1,0 +1,20 @@
+services:
+  inlab-web-dev:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      # 프로젝트 소스를 컨테이너에 그대로 마운트
+      - ./:/app
+      # node_modules는 컨테이너 내부에 유지(소스 변경으로 인한 재설치/깨짐 방지)
+      - /app/node_modules
+    environment:
+      # 필요 시에만 값 넣으세요. (VITE_ 접두사는 Vite에서 사용)
+      - VITE_KAKAO_MAPS_APPKEY=41d89c899dcdf03514d1866c83aa010c
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "8210:8210"
+    command: >
+      sh -c 'if [ ! -d node_modules ]; then npm ci; fi
+      && npm run dev -- --host 0.0.0.0 --port 8210'
+    restart: unless-stopped
+

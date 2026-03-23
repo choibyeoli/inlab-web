@@ -36,19 +36,20 @@ function PostDetail() {
         <div className="brand-area">
           <img
             src="/images/Yu.svg"
-            alt="YU Intelligent Networking Lab"
+            alt="YU Intelligence Networking Lab"
             className="brand-logo"
             onClick={() => navigate('/')}
             style={{ cursor: 'pointer' }}
           />
           <div>
-            <p>Intelligent Network Lab</p>
+            <p>Intelligence Networking Lab</p>
             <span>영남대학교 지능형 네트워크 연구실</span>
           </div>
         </div>
         <nav className="main-nav">
           <button onClick={() => navigate('/')}>Home</button>
           <button onClick={() => navigate('/news')}>News</button>
+          <button onClick={() => navigate('/gallery')}>Gallery</button>
           <button onClick={() => {
             navigate('/')
             requestAnimationFrame(() => {
@@ -96,17 +97,51 @@ function PostDetail() {
                   <div className="post-detail-meta">
                     <span className="post-author">{post.author}</span>
                     <span className="post-date">{post.date}</span>
-                    <span className="post-views">조회 {post.views}</span>
                   </div>
                 </div>
-                {post.image && (
-                  <div className="post-detail-image">
-                    <img src={post.image} alt={post.title} />
+                {(post.images || (post.image ? [post.image] : [])).map((imageSrc, index) => (
+                  <div key={`${post.id}-${index}`} className="post-detail-image">
+                    <img src={imageSrc} alt={`${post.title} ${index + 1}`} />
                   </div>
-                )}
+                ))}
                 <div className="post-detail-body">
                   <p className="post-detail-text">{post.fullContent || post.content}</p>
                 </div>
+                {Array.isArray(post.attachments) && post.attachments.length > 0 && (
+                  <div className="post-attachments">
+                    <h3 className="post-attachments-title">첨부파일</h3>
+                    <div className="post-attachments-list">
+                      {post.attachments.map((file) => (
+                        (() => {
+                          // 첨부파일명(원문 한글)을 그대로 사용하되,
+                          // URL에서는 정확한 인코딩을 적용해 서버/브라우저 경로 해석 문제를 줄입니다.
+                          const downloadName = file?.filename || ''
+                          const href =
+                            typeof downloadName === 'string' && downloadName.length > 0
+                              ? `/files/${encodeURIComponent(downloadName)}`
+                              : file?.url
+                          const shouldDownload = typeof href === 'string' && href.startsWith('/files/')
+
+                          return (
+                        <a
+                          key={file.url}
+                          className="post-attachment-card"
+                          href={href}
+                          download={shouldDownload ? (downloadName || true) : undefined}
+                          target={shouldDownload ? undefined : '_blank'}
+                          rel={shouldDownload ? undefined : 'noreferrer'}
+                        >
+                          <div className="post-attachment-name">{file.title || file.filename}</div>
+                          {file.filename && (
+                            <div className="post-attachment-meta">{file.filename}</div>
+                          )}
+                        </a>
+                          )
+                        })()
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.article>
             </AnimatePresence>
             <aside className="post-list-sidebar">
@@ -125,7 +160,6 @@ function PostDetail() {
                       <h4>{p.title}</h4>
                       <div className="sidebar-post-meta">
                         <span>{p.date}</span>
-                        <span>조회 {p.views}</span>
                       </div>
                     </div>
                   </div>
@@ -138,10 +172,10 @@ function PostDetail() {
 
       <footer className="footer">
         <div>
-          <p className="brand">YU Intelligent Networking Lab</p>
+          <p className="brand">YU Intelligence Networking Lab</p>
           <p>경상북도 경산시 대학로 280, 영남대학교 IT관 210호</p>
         </div>
-        <span>© {new Date().getFullYear()} Intelligent Networking Lab</span>
+        <span>© {new Date().getFullYear()} Intelligence Networking Lab</span>
       </footer>
     </div>
   )

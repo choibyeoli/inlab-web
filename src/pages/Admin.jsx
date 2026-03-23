@@ -496,7 +496,7 @@ function Admin() {
                   <div className="form-row">
                     <div className="form-group">
                       <label>연구실 이름</label>
-                      <input type="text" defaultValue="Intelligent Network Lab" />
+                      <input type="text" defaultValue="Intelligence Networking Lab" />
                     </div>
                   </div>
                   <div className="form-row">

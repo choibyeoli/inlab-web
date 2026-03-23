@@ -23,3 +23,16 @@ body {
   margin: 0;
   background: #e9edf4;
 }
+
+/* 모바일(iPhone 포함)에서 UI가 너무 크게 느껴질 때 */
+@media (max-width: 430px) {
+  html {
+    font-size: 15.2px; /* 기본 16px 대비 약간 축소 = 더 많이 보이게 */
+  }
+}
+
+@media (max-width: 390px) {
+  html {
+    font-size: 14.9px;
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  inlab-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # 필요 시에만 값을 넣으세요. (Vite 빌드 시점에 반영)
+        VITE_KAKAO_MAPS_APPKEY: "41d89c899dcdf03514d1866c83aa010c"
+    ports:
+      # Synology/호스트의 8210 -> 컨테이너의 8210
+      - "8210:8210"
+    restart: unless-stopped
+
